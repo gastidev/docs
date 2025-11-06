@@ -1,68 +1,49 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Gasti",
   "colors": {
-    "primary": "#16A34A",
+    "primary": "#0D9373",
     "light": "#07C983",
-    "dark": "#15803D"
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentación",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Comenzar",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "introduccion",
+              "inicio-rapido",
+              "funcionalidades",
+              "limites-de-plan"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Funcionalidades",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "features/whatsapp",
+              "features/transacciones",
+              "features/presupuestos",
+              "features/metas-ahorro",
+              "features/multi-moneda"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Guías de Usuario",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "guides/empezar",
+              "guides/gestionar-transacciones",
+              "guides/crear-presupuestos",
+              "guides/configurar-metas-ahorro",
+              "guides/usar-multi-moneda"
             ]
           }
         ]
@@ -71,14 +52,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Documentación",
+          "icon": "book-open-cover",
+          "href": "https://docs.gasti.com"
+        },
+        {
+          "anchor": "Comunidad",
+          "icon": "whatsapp",
+          "href": "https://wa.me/1234567890"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "icon": "newspaper",
+          "href": "https://blog.gasti.com"
         }
       ]
     }
@@ -90,33 +76,30 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Soporte",
+        "href": "mailto:support@gasti.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Abrir App",
+      "href": "https://app.gasti.com"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://twitter.com/gasti",
+      "github": "https://github.com/gasti",
+      "linkedin": "https://www.linkedin.com/company/gasti"
     }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "name": "gasti-docs",
+  "version": "1.0.0",
+  "description": "Documentación de Gasti - Tu asistente financiero con IA desde WhatsApp",
+  "scripts": {
+    "dev": "mintlify dev",
+    "build": "mintlify build",
+    "preview": "mintlify preview"
+  },
+  "dependencies": {
+    "mintlify": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

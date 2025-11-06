@@ -1,43 +1,94 @@
-# Mintlify Starter Kit
+# Documentación de Gasti
 
-Use the starter kit to get your docs deployed and ready to customize.
+Documentación oficial y guías de usuario para Gasti - Tu asistente financiero con IA desde WhatsApp.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Contenido
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+- **Comenzar**: Introducción, inicio rápido, visión general de funcionalidades y límites de plan
+- **Funcionalidades**: Documentación detallada de cada característica (Transacciones, Presupuestos, Metas de Ahorro, Multi-moneda, WhatsApp)
+- **Guías de Usuario**: Guías paso a paso para las principales tareas
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## Desarrollo Local
 
-## Development
+### Requisitos
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+- Node.js 18+
+- pnpm o npm
 
-```
-npm i -g mint
-```
+### Instalación
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
-mint dev
+```bash
+npm install
+# o
+pnpm install
 ```
 
-View your local preview at `http://localhost:3000`.
+### Ejecutar en desarrollo
 
-## Publishing changes
+```bash
+npm run dev
+# o
+pnpm dev
+```
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+La documentación estará disponible en `http://localhost:3000`
 
-## Need help?
+### Compilar para producción
 
-### Troubleshooting
+```bash
+npm run build
+# o
+pnpm build
+```
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+### Vista previa de producción
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+```bash
+npm run preview
+# o
+pnpm preview
+```
+
+## Estructura
+
+```
+docs/
+├── introduccion.mdx
+├── inicio-rapido.mdx
+├── funcionalidades.mdx
+├── limites-de-plan.mdx
+├── features/
+│   ├── whatsapp.mdx
+│   ├── transacciones.mdx
+│   ├── presupuestos.mdx
+│   ├── metas-ahorro.mdx
+│   └── multi-moneda.mdx
+└── guides/
+    ├── empezar.mdx
+    ├── gestionar-transacciones.mdx
+    ├── crear-presupuestos.mdx
+    ├── configurar-metas-ahorro.mdx
+    └── usar-multi-moneda.mdx
+```
+
+## Configuración
+
+La configuración de la documentación se encuentra en `docs.json`. Este archivo controla:
+
+- Navegación y estructura del sitio
+- Colores y branding
+- Links del navbar
+- Enlaces globales (community, support, etc.)
+
+## Cambios Recientes
+
+- Migración desde `gasti-core/apps/customers/customers-docs/`
+- Actualización a formato docs.json de Mintlify
+- Eliminación de contenido template
+- Limpieza de texto en inglés
+
+## Recursos
+
+- [Documentación de Mintlify](https://mintlify.com/docs)
+- [Gasti App](https://app.gasti.com)
+- [Blog de Gasti](https://blog.gasti.com)
