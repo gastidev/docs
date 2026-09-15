@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Gasti",
+  "name": "Gasti Developers",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
@@ -9,87 +9,29 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Documentación",
-        "groups": [
-          {
-            "group": "Comenzar",
-            "pages": [
-              "introduccion",
-              "inicio-rapido",
-              "funcionalidades",
-              "limites-de-plan"
-            ]
-          },
-          {
-            "group": "Funcionalidades",
-            "pages": [
-              "features/whatsapp",
-              "features/transacciones",
-              "features/presupuestos",
-              "features/metas-ahorro",
-              "features/multi-moneda"
-            ]
-          },
-          {
-            "group": "Guías de Usuario",
-            "pages": [
-              "guides/empezar",
-              "guides/gestionar-transacciones",
-              "guides/crear-presupuestos",
-              "guides/configurar-metas-ahorro",
-              "guides/usar-multi-moneda"
-            ]
-          }
+        "group": "Empezar",
+        "pages": [
+          "developers/introduccion",
+          "developers/conectar-mi-gasti",
+          "developers/registrar-integracion"
         ]
       },
       {
-        "tab": "Developers",
-        "groups": [
-          {
-            "group": "Empezar",
-            "pages": [
-              "developers/introduccion",
-              "developers/conectar-mi-gasti",
-              "developers/registrar-integracion"
-            ]
-          },
-          {
-            "group": "Autenticación",
-            "pages": [
-              "developers/oauth/flujo",
-              "developers/oauth/scopes",
-              "developers/oauth/tokens-y-refresh",
-              "developers/oauth/errores"
-            ]
-          },
-          {
-            "group": "API Reference",
-            "openapi": "developers/openapi.json"
-          }
+        "group": "Autenticación",
+        "pages": [
+          "developers/oauth/flujo",
+          "developers/oauth/scopes",
+          "developers/oauth/tokens-y-refresh",
+          "developers/oauth/errores"
         ]
+      },
+      {
+        "group": "API Reference",
+        "openapi": "developers/openapi.json"
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentación",
-          "icon": "book-open-cover",
-          "href": "https://docs.gasti.com"
-        },
-        {
-          "anchor": "Comunidad",
-          "icon": "whatsapp",
-          "href": "https://wa.me/1234567890"
-        },
-        {
-          "anchor": "Blog",
-          "icon": "newspaper",
-          "href": "https://blog.gasti.com"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",

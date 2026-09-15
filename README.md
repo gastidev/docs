@@ -1,13 +1,12 @@
-# Documentación de Gasti
+# Gasti Developers
 
-Documentación oficial, guías de usuario y documentación para desarrolladores de Gasti - Tu asistente financiero con IA desde WhatsApp.
+Portal para developers de Gasti: integraciones "Conectar mi Gasti", autenticación OAuth y referencia preliminar de la Public API.
 
 ## Contenido
 
-- **Comenzar**: Introducción, inicio rápido, visión general de funcionalidades y límites de plan
-- **Funcionalidades**: Documentación detallada de cada característica (Transacciones, Presupuestos, Metas de Ahorro, Multi-moneda, WhatsApp)
-- **Guías de Usuario**: Guías paso a paso para las principales tareas
-- **Developers**: Integraciones "Conectar mi Gasti", autenticación OAuth y referencia preliminar de la Public API
+- **Empezar**: Introducción, guía end-to-end de Conectar mi Gasti y registro manual de integraciones
+- **Autenticación**: Flujo OAuth, scopes, tokens, refresh y errores
+- **API Reference**: Especificación OpenAPI preliminar de la futura Public API
 
 ## Desarrollo Local
 
@@ -54,10 +53,6 @@ pnpm preview
 
 ```
 docs/
-├── introduccion.mdx
-├── inicio-rapido.mdx
-├── funcionalidades.mdx
-├── limites-de-plan.mdx
 ├── developers/
 │   ├── introduccion.mdx
 │   ├── conectar-mi-gasti.mdx
@@ -68,38 +63,23 @@ docs/
 │       ├── scopes.mdx
 │       ├── tokens-y-refresh.mdx
 │       └── errores.mdx
-├── features/
-│   ├── whatsapp.mdx
-│   ├── transacciones.mdx
-│   ├── presupuestos.mdx
-│   ├── metas-ahorro.mdx
-│   └── multi-moneda.mdx
-└── guides/
-    ├── empezar.mdx
-    ├── gestionar-transacciones.mdx
-    ├── crear-presupuestos.mdx
-    ├── configurar-metas-ahorro.mdx
-    └── usar-multi-moneda.mdx
 ```
 
 ## Configuración
 
 La configuración de la documentación se encuentra en `docs.json`. Este archivo controla:
 
-- Navegación y estructura del sitio
+- Navegación y estructura del portal
 - Colores y branding
 - Links del navbar
-- Enlaces globales (community, support, etc.)
+- Opciones de contexto de Mintlify
 
 ## Cambios Recientes
 
-- Migración desde `gasti-core/apps/customers/customers-docs/`
+- Conversión del sitio en un portal exclusivo para developers
 - Actualización a formato docs.json de Mintlify
-- Eliminación de contenido template
-- Limpieza de texto en inglés
+- Documentación OAuth y referencia OpenAPI preliminar
 
 ## Recursos
 
 - [Documentación de Mintlify](https://mintlify.com/docs)
-- [Gasti App](https://app.gasti.com)
-- [Blog de Gasti](https://blog.gasti.com)
