@@ -1,0 +1,46 @@
+---
+title: Errores OAuth
+description: 'Diagnóstico de errores del flujo OAuth de Gasti'
+icon: 'triangle-exclamation'
+---
+
+## Respuestas de error
+
+Identity devuelve errores OAuth con un código `error` y, cuando corresponde, una descripción en `error_description`.
+
+```json
+{
+  "error": "invalid_grant",
+  "error_description": "The refresh token is invalid or has already been used."
+}
+```
+
+| Código | Cuándo aparece | Qué revisar |
+| --- | --- | --- |
+| `invalid_request` | Falta un parámetro o `resource` no es válido. | Revisá parámetros obligatorios, `resource` y el formato form-urlencoded. |
+| `invalid_client` | El cliente no se puede autenticar. | Confirmá `client_id` y, para confidential clients, el canal del secret. |
+| `invalid_grant` | El code expiró, ya fue usado o el refresh token rotado se reutilizó. | Reiniciá el flujo o guardá el refresh token nuevo. |
+| `invalid_scope` | El cliente pidió un scope no aprobado. | Pedí solamente scopes registrados para tu integración. |
+| `unauthorized_client` | El cliente no puede usar ese grant o flujo. | Confirmá que usás Authorization Code y PKCE cuando corresponde. |
+| `access_denied` | La persona rechazó el consentimiento. | Respetá la decisión y no reintentes automáticamente. |
+
+## Problemas comunes
+
+<CardGroup cols={2}>
+  <Card title="redirect_uri no coincide" icon="link-slash">
+    La URI debe coincidir exactamente con la registrada: protocolo, dominio, puerto, path y trailing slash.
+  </Card>
+  <Card title="PKCE inválido" icon="shield-halved">
+    Guardá el `code_verifier` en la misma sesión que inició el flujo y enviá el valor original al token endpoint.
+  </Card>
+  <Card title="state inválido" icon="code-branch">
+    Rechazá callbacks cuyo `state` no coincida con el valor que guardaste antes de redirigir.
+  </Card>
+  <Card title="scope no aprobado" icon="ban">
+    Los scopes de negocio requieren provisioning manual; DCR no puede pedirlos.
+  </Card>
+</CardGroup>
+
+<Warning>
+No muestres el access token, refresh token, code verifier ni client secret en mensajes de error, logs o herramientas de soporte.
+</Warning>

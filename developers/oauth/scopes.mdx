@@ -1,0 +1,36 @@
+---
+title: Scopes
+description: 'Permisos OIDC y de negocio disponibles para una integración'
+icon: 'list-check'
+---
+
+## Scopes disponibles
+
+Pedí solamente los scopes que tu integración necesita. La persona ve los permisos en la pantalla de consentimiento antes de autorizar.
+
+### OpenID Connect
+
+| Scope | Para qué sirve |
+| --- | --- |
+| `openid` | Identifica la sesión OIDC y habilita el `id_token`. |
+| `profile` | Permite consultar datos básicos del perfil. |
+| `email` | Permite consultar la dirección de email. |
+| `offline_access` | Permite recibir un refresh token para mantener el acceso. |
+
+### Scopes de negocio
+
+| Scope | Texto en el consentimiento | Acceso previsto |
+| --- | --- | --- |
+| `transactions:read` | Ver tus transacciones | Leer las transacciones autorizadas. |
+| `accounts:read` | Ver tus cuentas y saldos | Leer cuentas y saldos autorizados. |
+| `categories:read` | Ver tus categorías | Leer categorías autorizadas. |
+
+<Warning>
+Los scopes de negocio están documentados para la futura Public API y todavía no habilitan endpoints productivos. La API está en estado **Próximamente / borrador**.
+</Warning>
+
+## Cómo se asignan
+
+Los clientes registrados dinámicamente (DCR) solamente pueden pedir scopes OIDC. Los scopes de negocio se asignan únicamente a integraciones partner provisionadas manualmente por Gasti.
+
+`client_id` y `client_secret` no otorgan permisos por sí solos: el acceso siempre requiere que la persona complete el login y el consentimiento para los scopes solicitados.

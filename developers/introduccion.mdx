@@ -1,0 +1,49 @@
+---
+title: Introducción para developers
+description: 'Conocé la integración OAuth de Gasti y la futura Public API'
+icon: 'code'
+---
+
+## Conectá tu producto con Gasti
+
+La pestaña **Developers** es el punto de partida para integrar tu producto con Gasti mediante **Conectar mi Gasti**. Vas a poder pedirle permiso a una persona para consultar sus datos financieros y, próximamente, consumir la Public API de Gasti.
+
+<Note>
+La Public API todavía no está disponible. Esta documentación es un borrador de la integración y los endpoints se publicarán cuando el resource server esté listo.
+</Note>
+
+## Qué podés hacer hoy
+
+<CardGroup cols={2}>
+  <Card title="Conectar mi Gasti" icon="link">
+    Implementá el flujo OAuth 2.1 con Authorization Code, PKCE S256 y consentimiento explícito.
+  </Card>
+  <Card title="Explorar la Public API" icon="book-open">
+    Consultá el contrato preliminar de cuentas, transacciones y categorías en la referencia OpenAPI.
+  </Card>
+</CardGroup>
+
+## Antes de empezar
+
+- Tu integración debe tener una persona responsable y un caso de uso claro.
+- Las integraciones se registran manualmente 1:1; no hay una consola de alta pública.
+- Las aplicaciones públicas (SPA o mobile) deben usar PKCE S256.
+- El `redirect_uri` debe coincidir exactamente con el que registremos.
+
+<Warning>
+No asumas que los endpoints de la Public API ya responden: `https://api.public.gasti.pro` está reservado, pero el servicio todavía no existe.
+</Warning>
+
+## Próximos pasos
+
+<Steps>
+  <Step title="Entendé el flujo OAuth">
+    Revisá el flujo de autorización, los endpoints de Identity y las reglas de PKCE en **Autenticación → Flujo OAuth**.
+  </Step>
+  <Step title="Registrá tu integración">
+    Prepará tus redirect URIs, scopes y datos de contacto. Después seguí **Registrar una integración**.
+  </Step>
+  <Step title="Implementá Conectar mi Gasti">
+    Usá la guía end-to-end para construir la URL de autorización, procesar el callback e intercambiar el código.
+  </Step>
+</Steps>

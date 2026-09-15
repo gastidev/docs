@@ -1,0 +1,72 @@
+---
+title: Tokens y refresh
+description: 'Intercambiá códigos, llamá la API y rotá refresh tokens'
+icon: 'key'
+---
+
+## Respuesta del token endpoint
+
+Intercambiá el código en `POST https://identity.api.gasti.pro/api/auth/oauth2/token`. Para clientes públicos, incluí el `code_verifier` usado para generar el `code_challenge`.
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST 'https://identity.api.gasti.pro/api/auth/oauth2/token' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  --data-urlencode 'grant_type=authorization_code' \
+  --data-urlencode 'client_id=TU_CLIENT_ID' \
+  --data-urlencode 'redirect_uri=https://tu-app.example.com/oauth/callback' \
+  --data-urlencode 'code=EL_CODE_DEL_CALLBACK' \
+  --data-urlencode 'code_verifier=EL_CODE_VERIFIER'
+```
+
+```json Respuesta
+{
+  "access_token": "eyJhbGciOiJSUzI1NiIs...",
+  "refresh_token": "eyJhbGciOiJSUzI1NiIs...",
+  "id_token": "eyJhbGciOiJSUzI1NiIs...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "openid offline_access transactions:read"
+}
+```
+
+</CodeGroup>
+
+La respuesta incluye `refresh_token` cuando pediste `offline_access` e `id_token` cuando pediste `openid`. El access token es un JWT:
+
+- `aud`: array que contiene `https://api.public.gasti.pro`
+- `scope`: scopes separados por espacios
+- `sub`: id de la persona
+- `expires_in`: `3600` segundos
+
+## Llamar a la API
+
+La Public API todavía no existe, pero el patrón de llamada va a ser:
+
+```bash
+curl 'https://api.public.gasti.pro/v1/accounts' \
+  -H 'Authorization: Bearer TU_ACCESS_TOKEN'
+```
+
+<Note>
+Un access token no reemplaza el consentimiento: el resource server debe validar firma, issuer, audience, expiración y scopes antes de responder.
+</Note>
+
+## Renovar el acceso
+
+Usá el refresh token contra el mismo endpoint:
+
+```bash
+curl -X POST 'https://identity.api.gasti.pro/api/auth/oauth2/token' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  --data-urlencode 'grant_type=refresh_token' \
+  --data-urlencode 'client_id=TU_CLIENT_ID' \
+  --data-urlencode 'refresh_token=TU_REFRESH_TOKEN'
+```
+
+Los refresh tokens rotan. Reemplazá el refresh token almacenado por el nuevo valor de la respuesta.
+
+<Warning>
+No reutilices un refresh token anterior después de una renovación. Si lo volvés a presentar, Identity responde `400 invalid_grant`.
+</Warning>

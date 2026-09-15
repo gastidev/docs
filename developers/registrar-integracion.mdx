@@ -1,0 +1,48 @@
+---
+title: Registrar una integración
+description: 'Solicitá el alta manual de tu integración con Gasti'
+icon: 'address-card'
+---
+
+## Alta manual 1:1
+
+Por ahora no hay una consola self-service para registrar clientes OAuth. Gasti da de alta cada integración manualmente para revisar su caso de uso, sus permisos y sus URLs de redirección.
+
+Mandanos esta información:
+
+<Steps>
+  <Step title="Nombre de tu integración">
+    Incluí el nombre comercial y, si aplica, el nombre de la empresa o producto al que pertenece.
+  </Step>
+  <Step title="Redirect URIs exactos">
+    Enviá cada URI completa, incluyendo protocolo, dominio, path y puerto cuando corresponda. No usamos comodines.
+  </Step>
+  <Step title="Tipo de cliente">
+    Indicá si es una aplicación pública (SPA o mobile, con PKCE S256) o una aplicación confidential con backend.
+  </Step>
+  <Step title="Scopes necesarios">
+    Justificá qué datos necesitás consultar. Pedí el mínimo conjunto de permisos para tu caso de uso.
+  </Step>
+  <Step title="Contacto técnico">
+    Compartí un email o canal donde podamos contactarte sobre la integración y sus incidentes.
+  </Step>
+</Steps>
+
+{/* TODO: reemplazar este contacto placeholder cuando esté definido el canal oficial de Developer Relations. */}
+Contactanos en [developers@gasti.pro](mailto:developers@gasti.pro).
+
+## Qué recibís
+
+Después de aprobar la integración, Gasti te entrega:
+
+- `client_id`
+- `client_secret`, únicamente para clientes confidential y por un canal seguro
+- Los redirect URIs y scopes aprobados
+
+<Warning>
+Nunca pongas un `client_secret` en una SPA, una app mobile ni en código que se distribuya al dispositivo de la persona. Esos clientes deben ser públicos y usar PKCE.
+</Warning>
+
+## Cambios posteriores
+
+Si necesitás sumar un dominio, cambiar redirect URIs o pedir scopes nuevos, solicitá una actualización antes de publicar el cambio. La coincidencia de `redirect_uri` es exacta y una URL no registrada no puede completar el flujo.
