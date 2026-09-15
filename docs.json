@@ -13,23 +13,23 @@
       {
         "group": "Empezar",
         "pages": [
-          "developers/introduccion",
-          "developers/conectar-mi-gasti",
-          "developers/registrar-integracion"
+          "introduccion",
+          "conectar-mi-gasti",
+          "registrar-integracion"
         ]
       },
       {
         "group": "Autenticación",
         "pages": [
-          "developers/oauth/flujo",
-          "developers/oauth/scopes",
-          "developers/oauth/tokens-y-refresh",
-          "developers/oauth/errores"
+          "oauth/flujo",
+          "oauth/scopes",
+          "oauth/tokens-y-refresh",
+          "oauth/errores"
         ]
       },
       {
         "group": "API Reference",
-        "openapi": "developers/openapi.json"
+        "openapi": "openapi.json"
       }
     ]
   },
