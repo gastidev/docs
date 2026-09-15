@@ -60,7 +60,18 @@
   border-radius: 9999px;
 }
 
-.dark nav[aria-label="Pages"] a.bg-primary\/10 {
+.dark nav[aria-label="Pages"] a.bg-primary\/10,
+.dark nav[aria-label="Pages"] a.bg-primary\/10:hover {
+  background: rgba(211, 255, 10, 0.1) !important;
+  color: var(--gasti-lime) !important;
+}
+
+.dark nav[aria-label="Pages"] a:not(.bg-primary\/10):hover {
+  background: rgba(234, 241, 230, 0.05) !important;
+}
+
+.dark .method-pill,
+.dark .method-nav-pill > span {
   background: rgba(211, 255, 10, 0.2) !important;
   color: var(--gasti-lime) !important;
 }
