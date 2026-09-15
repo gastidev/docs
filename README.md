@@ -53,16 +53,15 @@ pnpm preview
 
 ```
 docs/
-├── developers/
-│   ├── introduccion.mdx
-│   ├── conectar-mi-gasti.mdx
-│   ├── registrar-integracion.mdx
-│   ├── openapi.json
-│   └── oauth/
-│       ├── flujo.mdx
-│       ├── scopes.mdx
-│       ├── tokens-y-refresh.mdx
-│       └── errores.mdx
+├── introduccion.mdx
+├── conectar-mi-gasti.mdx
+├── registrar-integracion.mdx
+├── openapi.json
+└── oauth/
+    ├── flujo.mdx
+    ├── scopes.mdx
+    ├── tokens-y-refresh.mdx
+    └── errores.mdx
 ```
 
 ## Configuración
