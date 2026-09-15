@@ -38,11 +38,38 @@
   background-color: var(--gasti-surface);
 }
 
-.dark #navbar a[href="https://app.gasti.pro"] {
-  background: var(--gasti-lime);
-  color: #093505;
-  border: 1px solid rgba(211, 255, 10, 0.2);
-  font-weight: 600;
+/* DS: acentos color/20 + texto sólido, sin fill sólido */
+.dark a[href="https://app.gasti.pro"] > span.bg-primary-dark {
+  background: rgba(211, 255, 10, 0.2) !important;
+  border-radius: 9999px;
+  opacity: 1 !important;
+}
+
+.dark a[href="https://app.gasti.pro"]:hover > span.bg-primary-dark {
+  background: rgba(211, 255, 10, 0.3) !important;
+}
+
+.dark a[href="https://app.gasti.pro"] .text-white,
+.dark a[href="https://app.gasti.pro"] .text-white\/90 {
+  color: var(--gasti-lime) !important;
+}
+
+.dark button.tryit-button {
+  background: rgba(211, 255, 10, 0.2) !important;
+  color: var(--gasti-lime) !important;
+  border-radius: 9999px;
+}
+
+.dark nav[aria-label="Pages"] a.bg-primary\/10 {
+  background: rgba(211, 255, 10, 0.2) !important;
+  color: var(--gasti-lime) !important;
+}
+
+.dark [class*="badge"],
+.dark #content-area span[class*="rounded-full"][class*="bg-"] {
+  background: rgba(211, 255, 10, 0.2) !important;
+  color: var(--gasti-lime) !important;
+  border-color: rgba(211, 255, 10, 0.2) !important;
 }
 
 .dark #content-area h1,
