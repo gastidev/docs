@@ -43,6 +43,32 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Developers",
+        "groups": [
+          {
+            "group": "Empezar",
+            "pages": [
+              "developers/introduccion",
+              "developers/conectar-mi-gasti",
+              "developers/registrar-integracion"
+            ]
+          },
+          {
+            "group": "Autenticación",
+            "pages": [
+              "developers/oauth/flujo",
+              "developers/oauth/scopes",
+              "developers/oauth/tokens-y-refresh",
+              "developers/oauth/errores"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "openapi": "developers/openapi.json"
+          }
+        ]
       }
     ],
     "global": {

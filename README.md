@@ -1,12 +1,13 @@
 # Documentación de Gasti
 
-Documentación oficial y guías de usuario para Gasti - Tu asistente financiero con IA desde WhatsApp.
+Documentación oficial, guías de usuario y documentación para desarrolladores de Gasti - Tu asistente financiero con IA desde WhatsApp.
 
 ## Contenido
 
 - **Comenzar**: Introducción, inicio rápido, visión general de funcionalidades y límites de plan
 - **Funcionalidades**: Documentación detallada de cada característica (Transacciones, Presupuestos, Metas de Ahorro, Multi-moneda, WhatsApp)
 - **Guías de Usuario**: Guías paso a paso para las principales tareas
+- **Developers**: Integraciones "Conectar mi Gasti", autenticación OAuth y referencia preliminar de la Public API
 
 ## Desarrollo Local
 
@@ -57,6 +58,16 @@ docs/
 ├── inicio-rapido.mdx
 ├── funcionalidades.mdx
 ├── limites-de-plan.mdx
+├── developers/
+│   ├── introduccion.mdx
+│   ├── conectar-mi-gasti.mdx
+│   ├── registrar-integracion.mdx
+│   ├── openapi.json
+│   └── oauth/
+│       ├── flujo.mdx
+│       ├── scopes.mdx
+│       ├── tokens-y-refresh.mdx
+│       └── errores.mdx
 ├── features/
 │   ├── whatsapp.mdx
 │   ├── transacciones.mdx

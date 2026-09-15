@@ -1,0 +1,148 @@
+---
+title: Conectar mi Gasti
+description: 'Guía end-to-end para integrar Gasti con OAuth y PKCE'
+icon: 'plug'
+---
+
+## Integración completa
+
+Esta guía muestra el flujo para una aplicación pública que quiere pedir acceso a cuentas y transacciones. El ejemplo usa Authorization Code + PKCE S256 y solicita `offline_access` para poder renovar el acceso.
+
+<Note>
+La Public API está en estado **Próximamente / borrador**. Los endpoints y ejemplos de API documentan el contrato previsto; todavía no hay un resource server productivo que acepte estos tokens.
+</Note>
+
+## 1. Descubrí el Authorization Server
+
+Leé el documento de discovery para obtener los endpoints vigentes:
+
+```bash
+curl https://identity.api.gasti.pro/.well-known/oauth-authorization-server
+```
+
+También está disponible el discovery con el issuer incluido:
+
+```text
+https://identity.api.gasti.pro/.well-known/oauth-authorization-server/api/auth
+```
+
+Los valores actuales son:
+
+- Issuer: `https://identity.api.gasti.pro/api/auth`
+- JWKS: `https://identity.api.gasti.pro/api/auth/jwks`
+- Authorize: `https://identity.api.gasti.pro/api/auth/oauth2/authorize`
+- Token: `https://identity.api.gasti.pro/api/auth/oauth2/token`
+- UserInfo: `https://identity.api.gasti.pro/api/auth/oauth2/userinfo`
+
+## 2. Generá PKCE y construí la URL
+
+Generá un `code_verifier` aleatorio y su `code_challenge` S256. Guardá el verifier en la sesión que inicia el flujo: lo vas a necesitar cuando intercambies el código.
+
+<CodeGroup>
+
+```typescript Node.js
+import { createHash, randomBytes } from 'node:crypto';
+
+const base64url = (value: Buffer) =>
+  value.toString('base64url');
+
+const codeVerifier = base64url(randomBytes(32));
+const codeChallenge = base64url(
+  createHash('sha256').update(codeVerifier).digest(),
+);
+
+// Guardalo asociado a la sesión antes de redirigir.
+console.log({ codeVerifier, codeChallenge });
+```
+
+```text URL de autorización
+https://identity.api.gasti.pro/api/auth/oauth2/authorize?client_id=TU_CLIENT_ID&redirect_uri=https%3A%2F%2Ftu-app.example.com%2Foauth%2Fcallback&response_type=code&scope=openid%20offline_access%20transactions%3Aread%20accounts%3Aread&state=VALOR_ALEATORIO&code_challenge=TU_CODE_CHALLENGE&code_challenge_method=S256&resource=https%3A%2F%2Fapi.public.gasti.pro
+```
+
+</CodeGroup>
+
+Los parámetros relevantes son:
+
+| Parámetro | Valor |
+| --- | --- |
+| `client_id` | El client ID provisionado por Gasti. |
+| `redirect_uri` | Una URI registrada exactamente para tu integración. |
+| `response_type` | `code`. |
+| `scope` | Scopes separados por espacios. El ejemplo pide OIDC más transacciones y cuentas. |
+| `state` | Valor impredecible que vinculás con la sesión iniciada. |
+| `code_challenge` | El hash S256 del `code_verifier`, codificado en base64url. |
+| `code_challenge_method` | `S256`. |
+| `resource` | `https://api.public.gasti.pro`. |
+
+## 3. Login y consentimiento
+
+Identity muestra el login y la pantalla de consentimiento. La persona puede revisar los permisos y decidir si los acepta.
+
+<Warning>
+No intentes completar el login desde tu aplicación ni uses credenciales de la persona. Redirigila al Authorization Server.
+</Warning>
+
+## 4. Procesá el callback
+
+Después del consentimiento, Identity redirige a tu `redirect_uri` con:
+
+```text
+https://tu-app.example.com/oauth/callback?code=EL_CODE&state=VALOR_ALEATORIO
+```
+
+Validá `state` contra el valor guardado en la sesión. El callback recibe solamente `code` y `state`; todavía no contiene tokens.
+
+## 5. Intercambiá el código
+
+Hacé el intercambio desde tu backend o desde el cliente público usando el `code_verifier`:
+
+```bash
+curl -X POST 'https://identity.api.gasti.pro/api/auth/oauth2/token' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  --data-urlencode 'grant_type=authorization_code' \
+  --data-urlencode 'client_id=TU_CLIENT_ID' \
+  --data-urlencode 'redirect_uri=https://tu-app.example.com/oauth/callback' \
+  --data-urlencode 'code=EL_CODE' \
+  --data-urlencode 'code_verifier=EL_CODE_VERIFIER' \
+  --data-urlencode 'resource=https://api.public.gasti.pro'
+```
+
+Respuesta de ejemplo:
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIs...",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIs...",
+  "id_token": "eyJhbGciOiJIUzI1NiIs...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "openid offline_access transactions:read accounts:read"
+}
+```
+
+El `refresh_token` aparece porque pedimos `offline_access`; el `id_token`, porque pedimos `openid`.
+
+## 6. Llamá a la API
+
+Cuando la Public API esté disponible, enviá el access token como Bearer:
+
+```bash
+curl 'https://api.public.gasti.pro/v1/transactions?limit=20' \
+  -H 'Authorization: Bearer TU_ACCESS_TOKEN'
+```
+
+El token es un JWT con `aud` como array que contiene `https://api.public.gasti.pro`, `scope` como string separado por espacios y `sub` como el id de la persona.
+
+## 7. Renová el acceso
+
+Los refresh tokens rotan después de cada uso:
+
+```bash
+curl -X POST 'https://identity.api.gasti.pro/api/auth/oauth2/token' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  --data-urlencode 'grant_type=refresh_token' \
+  --data-urlencode 'client_id=TU_CLIENT_ID' \
+  --data-urlencode 'refresh_token=TU_REFRESH_TOKEN'
+```
+
+Guardá el nuevo refresh token que recibas y descartá el anterior. Reutilizar el anterior responde `400 invalid_grant`.

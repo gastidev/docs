@@ -1,0 +1,435 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gasti Public API",
+    "description": "Referencia preliminar de la futura Public API de Gasti. Próximamente / borrador.",
+    "version": "0.1.0-draft"
+  },
+  "servers": [
+    {
+      "url": "https://api.public.gasti.pro",
+      "description": "Futura Public API (próximamente)"
+    }
+  ],
+  "security": [
+    {
+      "oauth2": [
+        "openid"
+      ]
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "description": "OAuth Authorization Code con PKCE S256 para clientes públicos.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://identity.api.gasti.pro/api/auth/oauth2/authorize",
+            "tokenUrl": "https://identity.api.gasti.pro/api/auth/oauth2/token",
+            "refreshUrl": "https://identity.api.gasti.pro/api/auth/oauth2/token",
+            "scopes": {
+              "transactions:read": "Ver tus transacciones",
+              "accounts:read": "Ver tus cuentas y saldos",
+              "categories:read": "Ver tus categorías"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Account": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "currency",
+          "balance"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "acc_123"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cuenta principal"
+          },
+          "type": {
+            "type": "string",
+            "example": "checking"
+          },
+          "currency": {
+            "type": "string",
+            "example": "ARS"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double",
+            "example": 125000.5
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "required": [
+          "id",
+          "accountId",
+          "amount",
+          "currency",
+          "date",
+          "description",
+          "categoryId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "txn_123"
+          },
+          "accountId": {
+            "type": "string",
+            "example": "acc_123"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "example": -2500
+          },
+          "currency": {
+            "type": "string",
+            "example": "ARS"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-09-15T12:30:00Z"
+          },
+          "description": {
+            "type": "string",
+            "example": "Supermercado"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "cat_123"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cat_123"
+          },
+          "name": {
+            "type": "string",
+            "example": "Alimentos"
+          },
+          "parentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": null
+          }
+        }
+      },
+      "AccountPage": {
+        "type": "object",
+        "required": [
+          "data",
+          "nextCursor"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "eyJvZmZzZXQiOjIwfQ"
+          }
+        }
+      },
+      "TransactionPage": {
+        "type": "object",
+        "required": [
+          "data",
+          "nextCursor"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transaction"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": null
+          }
+        }
+      },
+      "CategoryPage": {
+        "type": "object",
+        "required": [
+          "data",
+          "nextCursor"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": null
+          }
+        }
+      },
+      "OAuthError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "invalid_scope"
+          },
+          "error_description": {
+            "type": "string",
+            "example": "The requested scope is not approved for this client."
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "El access token falta, expiró o no es válido.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OAuthError"
+            },
+            "example": {
+              "error": "invalid_token",
+              "error_description": "The access token is invalid or expired."
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "El token no tiene el scope requerido.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OAuthError"
+            },
+            "example": {
+              "error": "insufficient_scope",
+              "error_description": "The token does not include the required scope."
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1/me": {
+      "get": {
+        "summary": "Obtener el usuario autorizado",
+        "operationId": "getMe",
+        "security": [
+          {
+            "oauth2": [
+              "openid"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Identidad del usuario autorizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sub": {
+                      "type": "string",
+                      "description": "ID del usuario en Gasti."
+                    }
+                  },
+                  "required": [
+                    "sub"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/v1/accounts": {
+      "get": {
+        "summary": "Listar cuentas",
+        "operationId": "listAccounts",
+        "security": [
+          {
+            "oauth2": [
+              "accounts:read"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cuentas autorizadas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/v1/transactions": {
+      "get": {
+        "summary": "Listar transacciones",
+        "operationId": "listTransactions",
+        "security": [
+          {
+            "oauth2": [
+              "transactions:read"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Fecha inicial inclusiva.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Fecha final inclusiva.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacciones autorizadas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/v1/categories": {
+      "get": {
+        "summary": "Listar categorías",
+        "operationId": "listCategories",
+        "security": [
+          {
+            "oauth2": [
+              "categories:read"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categorías autorizadas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    }
+  }
+}
