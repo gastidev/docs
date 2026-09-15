@@ -1,0 +1,68 @@
+/* Gasti Developers: dark-only, bordes con alpha (/10 superficies, /20 botones y badges) */
+
+:root {
+  --gasti-ink: #eaf1e6;
+  --gasti-ink-dim: #9db396;
+  --gasti-lime: #d3ff0a;
+  --gasti-surface: #0c0d0b;
+  --gasti-border: rgba(234, 241, 230, 0.1);
+  --gasti-border-strong: rgba(234, 241, 230, 0.2);
+}
+
+.dark body {
+  color: var(--gasti-ink);
+}
+
+.dark #sidebar,
+.dark #navbar,
+.dark #content-side-layout,
+.dark [class*="border-"] {
+  border-color: var(--gasti-border) !important;
+}
+
+.dark button[class*="border"],
+.dark a[class*="rounded-full"],
+.dark [class*="badge"],
+.dark .callout,
+.dark [data-component="card"],
+.dark #content-area a[class*="rounded-2xl"],
+.dark #content-area a[class*="rounded-xl"] {
+  border-color: var(--gasti-border-strong) !important;
+}
+
+.dark #content-area a[class*="rounded-2xl"],
+.dark #content-area a[class*="rounded-xl"],
+.dark [data-component="card"],
+.dark pre,
+.dark code:not(pre code) {
+  background-color: var(--gasti-surface);
+}
+
+.dark #navbar a[href="https://app.gasti.pro"] {
+  background: var(--gasti-lime);
+  color: #093505;
+  border: 1px solid rgba(211, 255, 10, 0.2);
+  font-weight: 600;
+}
+
+.dark #content-area h1,
+.dark #content-area h2,
+.dark #content-area h3 {
+  letter-spacing: -0.01em;
+}
+
+.dark #content-area h1 {
+  border-bottom: 1px solid rgba(211, 255, 10, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.dark #content-area .prose,
+.dark #content-area p {
+  color: var(--gasti-ink);
+}
+
+.dark #sidebar-content a,
+.dark #table-of-contents a,
+.dark #navbar nav a {
+  color: var(--gasti-ink-dim);
+}

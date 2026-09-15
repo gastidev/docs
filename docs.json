@@ -3,9 +3,26 @@
   "theme": "mint",
   "name": "Gasti Developers",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
+    "primary": "#093505",
+    "light": "#D3FF0A",
+    "dark": "#D3FF0A"
+  },
+  "appearance": {
+    "default": "dark",
+    "strict": true
+  },
+  "background": {
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#050505"
+    }
+  },
+  "fonts": {
+    "family": "Geist",
+    "heading": {
+      "family": "Anek Odia",
+      "weight": 700
+    }
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -34,20 +51,21 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/gasti.png",
+    "dark": "/logo/gasti.png",
+    "href": "https://gasti.pro"
   },
   "navbar": {
     "links": [
       {
-        "label": "Soporte",
-        "href": "mailto:support@gasti.com"
+        "label": "gasti.pro",
+        "href": "https://gasti.pro"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Abrir App",
-      "href": "https://app.gasti.com"
+      "label": "Abrir Gasti",
+      "href": "https://app.gasti.pro"
     }
   },
   "contextual": {
@@ -61,9 +79,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://twitter.com/gasti",
-      "github": "https://github.com/gasti",
-      "linkedin": "https://www.linkedin.com/company/gasti"
+      "x": "https://x.com/gasti_pro",
+      "instagram": "https://www.instagram.com/gasti_pro/",
+      "linkedin": "https://www.linkedin.com/company/gastipro/"
     }
   }
 }
